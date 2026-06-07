@@ -1,0 +1,21 @@
+{% extends 'hotel_booking/base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto">
+    <p class="gold-text text-xs tracking-widest uppercase mb-2">Welcome Back</p>
+    <h1 class="text-3xl font-serif text-white mb-8">Sign In</h1>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+        <div>
+            <label class="block text-gray-400 text-sm mb-2">{{ field.label }}</label>
+            <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" 
+                class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500"
+                {% if field.value %}value="{{ field.value }}"{% endif %}>
+        </div>
+        {% endfor %}
+        <button type="submit" class="w-full gold-bg text-black py-4 font-bold tracking-widest uppercase hover:opacity-90 transition">Login</button>
+    </form>
+    <p class="text-gray-500 text-sm mt-6 text-center">Don't have an account? <a href="{% url 'accounts:register' %}" class="gold-text hover:underline">Register</a></p>
+</div>
+{% endblock %}

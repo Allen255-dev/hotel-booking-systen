@@ -1,0 +1,40 @@
+{% extends 'hotel_booking/base.html' %}
+{% block title %}Payment{% endblock %}
+{% block content %}
+<div class="max-w-xl mx-auto">
+    <p class="gold-text text-xs tracking-widest uppercase mb-2">Secure Payment</p>
+    <h1 class="text-3xl font-serif text-white mb-8">Complete Your Booking</h1>
+
+    <div class="bg-charcoal border border-gray-800 rounded p-6 mb-8">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-white">Room {{ booking.room.room_number }}</p>
+                <p class="text-gray-400 text-sm">{{ booking.check_in_date }} → {{ booking.check_out_date }}</p>
+                <p class="text-gray-400 text-sm">{{ booking.get_num_nights }} nights</p>
+            </div>
+            <p class="gold-text text-2xl font-bold">${{ booking.total_price }}</p>
+        </div>
+    </div>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label class="block text-gray-400 text-sm mb-2">Card Number</label>
+            <input type="text" placeholder="4242 4242 4242 4242" class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-gray-400 text-sm mb-2">Expiry</label>
+                <input type="text" placeholder="MM/YY" class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500">
+            </div>
+            <div>
+                <label class="block text-gray-400 text-sm mb-2">CVV</label>
+                <input type="text" placeholder="123" class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500">
+            </div>
+        </div>
+        <button type="submit" class="w-full gold-bg text-black py-4 font-bold tracking-widest uppercase hover:opacity-90 transition mt-4">
+            Pay ${{ booking.total_price }}
+        </button>
+    </form>
+</div>
+{% endblock %}

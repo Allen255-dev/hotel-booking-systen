@@ -1,0 +1,23 @@
+{% extends 'hotel_booking/base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto">
+    <p class="gold-text text-xs tracking-widest uppercase mb-2">Join LuxeStay</p>
+    <h1 class="text-3xl font-serif text-white mb-8">Create Account</h1>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+        <div>
+            <label class="block text-gray-400 text-sm mb-2">{{ field.label }}</label>
+            <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}"
+                class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500"
+                {% if field.value %}value="{{ field.value }}"{% endif %}>
+            {% if field.errors %}<p class="text-red-400 text-xs mt-1">{{ field.errors|join:", " }}</p>{% endif %}
+            {% if field.help_text %}<p class="text-gray-600 text-xs mt-1">{{ field.help_text }}</p>{% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="w-full gold-bg text-black py-4 font-bold tracking-widest uppercase hover:opacity-90 transition">Create Account</button>
+    </form>
+    <p class="text-gray-500 text-sm mt-6 text-center">Already have an account? <a href="{% url 'accounts:login' %}" class="gold-text hover:underline">Login</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'hotel_booking/base.html' %}
+{% block title %}Book Room {{ room.room_number }}{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <p class="gold-text text-xs tracking-widest uppercase mb-2">New Reservation</p>
+    <h1 class="text-3xl font-serif text-white mb-8">Book Room {{ room.room_number }}</h1>
+
+    <div class="bg-charcoal border border-gray-800 rounded p-6 mb-8">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-white font-serif text-xl">Room {{ room.room_number }}</p>
+                <p class="gold-text text-sm">{{ room.room_type.name }}</p>
+            </div>
+            <p class="gold-text text-2xl font-bold">${{ room.price_per_night }}<span class="text-gray-500 text-sm">/night</span></p>
+        </div>
+    </div>
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-6">
+            <div>
+                <label class="block text-gray-400 text-sm mb-2">Check-in Date</label>
+                <input type="date" name="check_in_date" min="{{ today }}" required
+                    class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500">
+            </div>
+            <div>
+                <label class="block text-gray-400 text-sm mb-2">Check-out Date</label>
+                <input type="date" name="check_out_date" min="{{ today }}" required
+                    class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500">
+            </div>
+        </div>
+        <div>
+            <label class="block text-gray-400 text-sm mb-2">Number of Guests</label>
+            <input type="number" name="num_guests" min="1" max="{{ room.capacity }}" value="1" required
+                class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500">
+        </div>
+        <div>
+            <label class="block text-gray-400 text-sm mb-2">Special Requests</label>
+            <textarea name="special_requests" rows="3"
+                class="w-full bg-charcoal border border-gray-700 text-white px-4 py-3 rounded focus:outline-none focus:border-yellow-500"
+                placeholder="Any special requirements?"></textarea>
+        </div>
+        <button type="submit" class="w-full gold-bg text-black py-4 font-bold tracking-widest uppercase hover:opacity-90 transition">
+            Confirm Booking
+        </button>
+    </form>
+</div>
+{% endblock %}
